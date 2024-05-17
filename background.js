@@ -1,22 +1,12 @@
-const audioFiles = [
-  'sounds/sound1.mp3',
-  'sounds/sound2.mp3',
-  'sounds/sound3.mp3',
-  'sounds/sound4.mp3'
-];
-
-const audioElements = audioFiles.map(file => {
-  const audio = new Audio(chrome.runtime.getURL(file));
-  audio.loop = true;
-  return audio;
-});
+let playing = [false, false, false, false];
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   const { action, index } = message;
 
-  if (action === 'play') {
-    audioElements[index].play();
-  } else if (action === 'pause') {
-    audioElements[index].pause();
+  if (action === 'toggle') {
+    playing[index] = !playing[index];
+    sendResponse({ playing: playing[index] });
+  } else if (action === 'getState') {
+    sendResponse({ playing });
   }
 });
