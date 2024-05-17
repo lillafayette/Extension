@@ -1,3 +1,16 @@
+const audioFiles = [
+  'sounds/sound1.mp3',
+  'sounds/sound2.mp3',
+  'sounds/sound3.mp3',
+  'sounds/sound4.mp3'
+];
+
+const audioElements = audioFiles.map(file => {
+  const audio = new Audio(chrome.runtime.getURL(file));
+  audio.loop = true;
+  return audio;
+});
+
 const buttons = [
   document.getElementById('sound1'),
   document.getElementById('sound2'),
@@ -5,17 +18,29 @@ const buttons = [
   document.getElementById('sound4')
 ];
 
-let playing = [false, false, false, false];
+function updateButtonText(index, isPlaying) {
+  buttons[index].textContent = isPlaying ? `Pause ${index + 1}` : `Sound ${index + 1}`;
+}
+
+chrome.runtime.sendMessage({ action: 'getState' }, response => {
+  response.playing.forEach((isPlaying, index) => {
+    if (isPlaying) {
+      audioElements[index].play();
+    }
+    updateButtonText(index, isPlaying);
+  });
+});
 
 buttons.forEach((button, index) => {
   button.addEventListener('click', () => {
-    if (playing[index]) {
-      chrome.runtime.sendMessage({ action: 'pause', index });
-      button.textContent = `Sound ${index + 1}`;
-    } else {
-      chrome.runtime.sendMessage({ action: 'play', index });
-      button.textContent = `Pause ${index + 1}`;
-    }
-    playing[index] = !playing[index];
+    chrome.runtime.sendMessage({ action: 'toggle', index }, response => {
+      const isPlaying = response.playing;
+      if (isPlaying) {
+        audioElements[index].play();
+      } else {
+        audioElements[index].pause();
+      }
+      updateButtonText(index, isPlaying);
+    });
   });
 });
