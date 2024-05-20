@@ -3,7 +3,7 @@
   "name": "HuShhh",
   "version": "1.0",
   "description": "Extension with buttons to play looping sounds in the background.",
-  "permissions": ["background"],
+  "permissions": ["background", "tabs"],
   "background": {
     "service_worker": "background.js"
   },
