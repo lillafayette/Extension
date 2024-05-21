@@ -1,13 +1,14 @@
 {
-  "manifest_version": 3,
+  "manifest_version": 2,
   "name": "HuShhh",
   "version": "1.0",
   "description": "Extension with buttons to play looping sounds in the background.",
-  "permissions": ["offscreen"],
+  "permissions": ["tabs"],
   "background": {
-    "service_worker": "background.js"
+    "scripts": ["background.js"],
+    "persistent": true
   },
-  "action": {
+  "browser_action": {
     "default_popup": "popup.html",
     "default_icon": {
       "16": "icons/icon16.png",
@@ -19,10 +20,5 @@
     "16": "icons/icon16.png",
     "48": "icons/icon48.png",
     "128": "icons/icon128.png"
-  },
-  "offscreen": {
-    "permissions": ["audio"],
-    "url": "offscreen.html",
-    "reasons": ["AUDIO_PLAYBACK"]
   }
 }
