@@ -1,24 +1,35 @@
-let audioElements = [];
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f4f8;
+  margin: 0;
+  padding: 0;
+}
 
-const audioFiles = [
-  'sounds/sound1.mp3',
-  'sounds/sound2.mp3',
-  'sounds/sound3.mp3',
-  'sounds/sound4.mp3'
-];
+.container {
+  text-align: center;
+  padding: 20px;
+}
 
-audioFiles.forEach((file, index) => {
-  const audio = new Audio(file);
-  audio.loop = true;
-  audioElements[index] = audio;
-});
+h1 {
+  color: #007acc;
+}
 
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  const { action, index } = message;
+.button-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 
-  if (action === 'play') {
-    audioElements[index].play();
-  } else if (action === 'pause') {
-    audioElements[index].pause();
-  }
-}); 
+button {
+  background-color: #007acc;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+button:hover {
+  background-color: #005f99;
+}
