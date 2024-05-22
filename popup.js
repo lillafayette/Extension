@@ -17,7 +17,7 @@ chrome.runtime.sendMessage({ action: 'getState' }, response => {
   });
 });
 
-// nasłuchiwacze kliknięcia na przycisk, które wysyłają informację do background.js z żadaniem wyłączenia lub włączenia dźwięku i aktualizują tekst na przyciskus
+// nasłuchiwanie kliknięcia na przycisk, które wysyłają informację do background.js z żadaniem wyłączenia lub włączenia dźwięku i aktualizują tekst na przyciskus
 buttons.forEach((button, index) => {
   button.addEventListener('click', () => {
     chrome.runtime.sendMessage({ action: 'toggle', index }, response => {
