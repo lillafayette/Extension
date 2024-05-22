@@ -1,4 +1,4 @@
-let audioElements = [];
+let audioElements = []; // tablica dla obiektów audio
 let playing = [false, false, false, false];
 
 const audioFiles = [
@@ -17,7 +17,7 @@ audioFiles.forEach((file, index) => {
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   const { action, index } = message;
-
+ //włącz / wyłącz odtwarzanie dźwięku
   if (action === 'toggle') {
     playing[index] = !playing[index];
     if (playing[index]) {
@@ -25,6 +25,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     } else {
       audioElements[index].pause();
     }
+  // getState - zwraca aktualny stan odtwarzania
     sendResponse({ playing: playing[index] });
   } else if (action === 'getState') {
     sendResponse({ playing });
