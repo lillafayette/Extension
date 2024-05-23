@@ -1,4 +1,3 @@
-// =======================POMODORO SECTION==================================
 const defaultTime = 25;
 
 const startBtn = document.getElementById("start-btn");
@@ -8,13 +7,6 @@ const decreaseBtn = document.getElementById("decrease-btn");
 let isRunning = false;
 let pomodoroTime = defaultTime;
 let countdown;
-
-// Moved all function declarations to the top
-function updateButtonText(index, isPlaying) {
-  buttons[index].textContent = isPlaying
-    ? `Pause ${index + 1}`
-    : `Sound ${index + 1}`;
-}
 
 function displayTime(seconds) {
   let minutes = Math.floor(seconds / 60);
@@ -43,6 +35,8 @@ startBtn.addEventListener("click", function () {
     
       if (timeInSeconds <= 0) {
         clearInterval(countdown);
+        showNotification();
+        playSound(); // Play the sound when the timer ends
         isRunning = false;
         startBtn.textContent = 'Start';
         pomodoroTime = defaultTime;
@@ -114,10 +108,4 @@ resetBtn.addEventListener("click", function () {
 
   // Update the timer display
   displayTime(pomodoroTime * 60); // Display the time in seconds
-});
-
-chrome.runtime.sendMessage({ action: "getState" }, (response) => {
-  response.playing.forEach((isPlaying, index) => {
-    updateButtonText(index, isPlaying);
-  });
 });
