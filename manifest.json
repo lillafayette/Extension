@@ -3,9 +3,13 @@
   "name": "HuShhh",
   "version": "1.0",
   "description": "Extension with buttons to play looping sounds in the background.",
-  "permissions": ["tabs"],
+  "permissions": [
+    "tabs"
+  ],
   "background": {
-    "scripts": ["background.js"],
+    "scripts": [
+      "background.js"
+    ],
     "persistent": true
   },
   "browser_action": {
@@ -22,6 +26,3 @@
     "128": "icons/icon128.png"
   }
 }
-
-
-//check of commit
