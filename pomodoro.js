@@ -4,6 +4,10 @@ const startBtn = document.getElementById("start-btn");
 const resetBtn = document.getElementById("reset-btn");
 const increaseBtn = document.getElementById("increase-btn");
 const decreaseBtn = document.getElementById("decrease-btn");
+const pomodoroBtn = document.getElementById("pomodoro-btn");
+const longBreakBtn = document.getElementById("long-break-btn");
+const shortBreakBtn = document.getElementById("short-break-btn");
+
 let isRunning = false;
 let pomodoroTime = defaultTime;
 let countdown;
@@ -109,3 +113,18 @@ resetBtn.addEventListener("click", function () {
   // Update the timer display
   displayTime(pomodoroTime * 60); // Display the time in seconds
 });
+
+pomodoroBtn.addEventListener("click", function () {
+    pomodoroTime = 25;
+    displayTime(pomodoroTime * 60);
+  });
+  
+  longBreakBtn.addEventListener("click", function () {
+    pomodoroTime = 10;
+    displayTime(pomodoroTime * 60);
+  });
+  
+  shortBreakBtn.addEventListener("click", function () {
+    pomodoroTime = 5;
+    displayTime(pomodoroTime * 60);
+  });
