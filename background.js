@@ -34,10 +34,10 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         const index = request.index
         soundStates[index] = !soundStates[index]
         // Logic to play/pause the sound
-        if (playing[index]) {
-            soundStates[index].play()
+        if (soundStates[index]) {
+            sounds[index].play()
         } else {
-            soundStates[index].pause()
+            sounds[index].pause()
         }
         sendResponse({ playing: soundStates[index] })
     } else if (request.action === 'setVolume') {
@@ -45,5 +45,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         const volume = request.volume
         soundVolumes[index] = volume
         // Logic to set volume of the sound
+        sounds[index].volume = volume
+        sendResponse({ volume: soundVolumes[index] })
     }
 })

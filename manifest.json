@@ -4,6 +4,7 @@
   "version": "1.0",
   "description": "Extension with buttons to play looping sounds in the background.",
   "permissions": [
+    "storage",
     "tabs"
   ],
   "background": {
