@@ -1,19 +1,32 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>HuShhh</title>
-  <link rel="stylesheet" href="popup.css">
-</head>
-<body>
-  <div class="container">
-    <h1>HuShhh</h1>
-    <div class="button-container">
-      <button id="sound1">Sound 1</button>
-      <button id="sound2">Sound 2</button>
-      <button id="sound3">Sound 3</button>
-      <button id="sound4">Sound 4</button>
-    </div>
-  </div>
-  <script src="popup.js"></script>
-</body>
+  <head>
+    <title>HuShhh</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <div class="container">
+      
+      <h1>HuShhh</h1>
+      <div class="button-container">
+        <button id="sound1">Sound 1</button>
+        <button id="sound2">Sound 2</button>
+        <button id="sound3">Sound 3</button>
+        <button id="sound4">Sound 4</button>
+      </div>
+
+      <div class="pomodoro">
+        <h1>Pomodoro</h1>
+        <button id="increase-btn">+</button>
+        <div id="timer-display">25:00</div>
+        <button id="decrease-btn">-</button>
+        <br>
+        <button id="start-btn">Start</button>
+        <button id="reset-btn">Reset</button>
+      </div>
+
+    <script src="popup.js"></script>
+    <script src="pomodoro.js"></script>
+
+  </body>
 </html>
