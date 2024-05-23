@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Noisli Extension</title>
+        <link rel="stylesheet" type="text/css" href="styles.css">
+    </head>
+<body>
+    <div class="section">
+        <h2>🔊 Noisli Extension</h2>
+    </div>
+    <div class="section">
+        <h2>🎵 Playlists</h2>
+        <ul id="songList"></ul>
+    </div>
+    <div class="section">
+        <h2>⏲️ Timer</h2>
+        <button id="startPause">Start/Pause</button>
+        <input type="number" id="duration" min="1" max="60" value="25">
+        <div id="timerDisplay">
+            <div id="timerProgress"></div>
+            <span id="timerText"></span> <!-- Change this line -->
+        </div>
+    </div>
+    <div class="section">
+        <h2>🔉 Master Volume</h2>
+        <input type="range" id="masterVolume" min="0" max="1" step="0.01" value="1">
+        <button id="muteButton">Mute</button>
+        <button id="playAllButton">Play All</button> <!-- Add this line -->
+        <button id="stopAllButton">Stop All</button> <!-- Add this line -->
+    </div>
+
+    <script src="script.js"></script>
+    <script src="pomodoro.js"></script>
+    <script src="song.js"></script>
+</body>
+</html>

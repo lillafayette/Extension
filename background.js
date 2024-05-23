@@ -1,63 +1,64 @@
-// Array to track if each sound is playing
-let soundStates = [false, false, false, false]
-// Array to track if each sound is playing
-let soundVolumes = [1, 1, 1, 1]
+const NUM_SOUNDS = 4;
+let soundStates = Array(NUM_SOUNDS).fill(false);
+let mainVolume = 0.5;
 
-let mainVolume = 1
+const audioFiles = Array.from({length: NUM_SOUNDS}, (_, i) => `sounds/sound${i+1}.mp3`);
+const audios = audioFiles.map((file, index) => {
+  const audio = new Audio(chrome.runtime.getURL(file));
+  audio.loop = true;
+  return audio;
+});
 
-const audioFiles = [
-  "sounds/sound1.mp3",
-  "sounds/sound2.mp3",
-  "sounds/sound3.mp3",
-  "sounds/sound4.mp3",
-]
-const audios = audioFiles.map((file) => {
-  const audio = new Audio(chrome.runtime.getURL(file))
-  audio.loop = true
-  return audio
-})
+function updateAudioVolumes() {
+  audios.forEach((audio) => {
+    audio.volume = mainVolume;
+  });
+}
 
-// Initialize volumes from storage
-chrome.storage.local.get(
-  ["volume0", "volume1", "volume2", "volume3", "mainVolume"],
-  (result) => {
-    for (let i = 0; i < soundVolumes.length; i++) {
-      if (result[`volume${i}`] !== undefined) {
-        soundVolumes[i] = result[`volume${i}`]
-        audios[i].volume = soundVolumes[i] * mainVolume
-      }
-    }
-    if (result.mainVolume !== undefined) {
-      mainVolume = result.mainVolume;
-    }
-  },
-)
+chrome.storage.local.get("mainVolume", (result) => {
+  if (result.mainVolume !== undefined) {
+    mainVolume = result.mainVolume;
+    updateAudioVolumes();
+  }
+});
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if (request.action === "getState") {
-    sendResponse({ playing: soundStates, volumes: soundVolumes })
-  } else if (request.action === "toggle") {
-    const index = request.index
-    soundStates[index] = !soundStates[index]
-    if (soundStates[index]) {
-      audios[index].play()
-    } else {
-      audios[index].pause()
-    }
-    sendResponse({ playing: soundStates[index] })
-  } else if (request.action === "setVolume") {
-    const index = request.index
-    const volume = request.volume
-    soundVolumes[index] = volume
-    audios[index].volume = volume * mainVolume
-    chrome.storage.local.set({ [`volume${i}`]: volume })
-    sendResponse({ volume: soundVolumes[index] })
-  } else if (request.action === "setMainVolume") {
-    mainVolume = request.mainVolume;
-    audios.forEach((audio, index) => {
-      audio.volume = mainVolume * soundVolumes[index];
-    });
-    chrome.storage.local.set({ mainVolume });
-    sendResponse({ mainVolume });
+  const { action, index } = request;
+  switch (action) {
+    case "getState":
+      sendResponse({ playing: soundStates, mainVolume });
+      break;
+    case "toggle":
+      soundStates[index] = !soundStates[index];
+      soundStates[index] ? audios[index].play() : audios[index].pause();
+      sendResponse({ playing: soundStates[index] });
+      break;
+    case "setMainVolume":
+      mainVolume = request.mainVolume;
+      updateAudioVolumes();
+      chrome.storage.local.set({ mainVolume });
+      sendResponse({ mainVolume });
+      break;
   }
-})
+});
+
+// Get the buttons
+const muteButton = document.getElementById("muteButton");
+const playAllButton = document.getElementById("playAllButton");
+const stopAllButton = document.getElementById("stopAllButton");
+
+// Add event listeners
+muteButton.addEventListener("click", () => {
+  mainVolume = 0;
+  updateAudioVolumes();
+});
+
+playAllButton.addEventListener("click", () => {
+  soundStates.fill(true);
+  audios.forEach(audio => audio.play());
+});
+
+stopAllButton.addEventListener("click", () => {
+  soundStates.fill(false);
+  audios.forEach(audio => audio.pause());
+});

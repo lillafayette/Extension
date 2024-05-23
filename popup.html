@@ -1,75 +1,62 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Audio Player for Autism</title>
+        <title>Noisli Extension</title>
+        <link rel="stylesheet" type="text/css" href="styles.css" />
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css"
-        />
         <script
             defer
             src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"
         ></script>
     </head>
-    <main>
-        <div class="container is-fullhd">
-            <h1>Audio Player</h1>
-            <div class="object">
-                <div class="fixed-grid">
-                    <div class="grid">
-                        <div>
-                            <button id="sound1" class="button">Sound 1</button>
-                            <input
-                                id="volume1"
-                                class="slider"
-                                type="range"
-                                min="0"
-                                max="100"
-                            />
-                        </div>
-                        <div>
-                            <button id="sound2" class="button">Sound 2</button>
-                            <input
-                                id="volume2"
-                                class="slider"
-                                type="range"
-                                min="0"
-                                max="100"
-                            />
-                        </div>
-                        <div>
-                            <button id="sound3" class="button">Sound 3</button>
-                            <input
-                                id="volume3"
-                                class="slider"
-                                type="range"
-                                min="0"
-                                max="100"
-                            />
-                        </div>
-                        <div>
-                            <button id="sound4" class="button">Sound 4</button>
-                            <input
-                                id="volume4"
-                                class="slider"
-                                type="range"
-                                min="0"
-                                max="100"
-                            />
-                        </div>
-                    </div>
-                </div>
-                <input
-                    id="mainVolume"
-                    class="slider"
-                    type="range"
-                    min="0"
-                    max="100"
-                />
+    <body>
+        <div class="section">
+            <h2>🔊 Noisli Extension</h2>
+        </div>
+        <div class="section">
+            <h2>🎵 Playlists</h2>
+            <ul id="songList">
+                <li>
+                    <button id="sound1" class="button">Sound 1</button>
+                </li>
+                <li>
+                    <button id="sound2" class="button">Sound 2</button>
+                </li>
+                <li>
+                    <button id="sound3" class="button">Sound 3</button>
+                </li>
+                <li>
+                    <button id="sound4" class="button">Sound 4</button>
+                </li>
+            </ul>
+        </div>
+        <div class="section">
+            <h2>⏲️ Timer</h2>
+            <button id="startPause">Start/Pause</button>
+            <input type="number" id="duration" min="1" max="60" value="25" />
+            <div id="timerDisplay">
+                <div id="timerProgress"></div>
+                <span id="timerText"></span>
             </div>
         </div>
+        <div class="section">
+            <h2>🔉 Main Volume</h2>
+            <input
+                type="range"
+                id="mainVolume"
+                min="0"
+                max="1"
+                step="0.01"
+                value="1"
+            />
+            <button id="muteButton">Mute</button>
+            <button id="playAllButton">Play All</button>
+            <button id="stopAllButton">Stop All</button>
+        </div>
+
+        <script src="script.js"></script>
+        <script src="pomodoro.js"></script>
         <script src="popup.js"></script>
-    </main>
+    </body>
 </html>
